@@ -74,14 +74,14 @@
 
     <section class="reservation section container" id="reservation">
       <div class="section-kicker">04 / DEMANDE DE RÉSERVATION</div>
-      <div class="reservation-grid"><div><h2>Parlons de votre <em>prochaine activité.</em></h2><p class="muted">Remplissez ce formulaire de démonstration. Il préparera un message WhatsApp que vous pourrez envoyer à MSG après avoir ajouté leur numéro officiel.</p><div class="contact-detail"><span class="detail-icon">✳</span><div><b>Une demande, sans engagement</b><small>L'équipe MSG pourra confirmer les disponibilités et les tarifs.</small></div></div></div>
+      <div class="reservation-grid"><div><h2>Parlons de votre <em>prochaine activité.</em></h2><p class="muted">Remplissez ce formulaire pour voir comment un visiteur pourrait envoyer une demande de réservation à MSG.</p><div class="contact-detail"><span class="detail-icon">✳</span><div><b>Une demande, sans engagement</b><small>L'équipe MSG pourra confirmer les disponibilités et les tarifs.</small></div></div></div>
         <form id="bookingForm" class="booking-form">
           <div class="form-row"><label>Nom complet<input name="name" required placeholder="Votre nom"></label><label>Téléphone<input name="phone" required placeholder="+509 ..."></label></div>
           <label>Type d'espace<select name="space" required><option value="">Sélectionnez un espace</option><option>Salle de formation</option><option>Salle de réunion</option><option>Bureau professionnel</option><option>Autre / à discuter</option></select></label>
           <div class="form-row"><label>Date souhaitée<input type="date" name="date"></label><label>Nombre de participants<input type="number" name="people" min="1" placeholder="Ex. 20"></label></div>
           <label>Parlez-nous de votre besoin<textarea name="message" rows="4" placeholder="Durée, équipement souhaité, type d'activité..."></textarea></label>
           <button class="btn submit-btn" type="submit">Préparer ma demande <span>↗</span></button>
-          <p class="form-note" id="formNote">Démo uniquement : aucune demande n'est envoyée automatiquement.</p>
+          <p class="form-note" id="formNote">Démo interactive : après validation, une confirmation s’affichera. Aucune donnée n’est envoyée à MSG dans cette démonstration.</p>
         </form>
       </div>
     </section>
@@ -89,6 +89,20 @@
     <section class="contact-strip" id="contact"><div class="container contact-strip-inner"><div><div class="section-kicker">05 / CONTACT</div><h2>Besoin d'informations ?</h2><p>Contactez MSG pour discuter de votre prochaine activité.</p></div><div class="contact-placeholder"><span>COORDONNÉES À CONFIRMER</span><b>Téléphone · WhatsApp · Adresse · Email</b></div></div></section>
   </main>
   <footer class="footer"><div class="container footer-inner"><a class="brand footer-brand" href="#top"><span class="brand-mark">M</span><span class="brand-text">MSG<small>MANAGEMENT SERVICES GROUP</small></span></a><p>Concept de démonstration créé par <a href="https://webhaii.com/" target="_blank" rel="noopener">Webhaii</a>.</p><a class="back-top" href="#top">RETOUR EN HAUT ↑</a></div></footer>
+
+  <div class="confirmation-modal" id="confirmationModal" aria-hidden="true">
+    <div class="confirmation-backdrop" data-close-modal></div>
+    <section class="confirmation-card" role="dialog" aria-modal="true" aria-labelledby="confirmationTitle" aria-describedby="confirmationDescription">
+      <button class="confirmation-close" type="button" aria-label="Fermer la confirmation" data-close-modal>×</button>
+      <div class="confirmation-icon" aria-hidden="true">✓</div>
+      <p class="confirmation-eyebrow">DEMANDE PRÉPARÉE</p>
+      <h2 id="confirmationTitle">Merci pour votre demande !</h2>
+      <p id="confirmationDescription">Votre formulaire de démonstration a bien été validé. Dans le site final, cette étape pourra confirmer l’envoi de votre demande à l’équipe MSG.</p>
+      <div class="confirmation-summary" id="confirmationSummary"></div>
+      <p class="confirmation-note">Ceci est une démonstration : aucune demande n’a été transmise à MSG.</p>
+      <button class="btn confirmation-done" type="button" data-close-modal>Compris <span>✓</span></button>
+    </section>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>

@@ -20,3 +20,10 @@ IMPORTANT AVANT DE PRÉSENTER / PUBLIER
 - Vérifier le périmètre, l'hébergement, le domaine et les modalités de maintenance dans le devis Webhaii.
 
 Créé comme concept de présentation par Webhaii — https://webhaii.com/
+
+
+MISE À JOUR — FORMULAIRE INTERACTIF
+- Le formulaire affiche une carte de confirmation après validation.
+- La carte présente un résumé de la demande et peut être fermée par le bouton, le fond ou la touche Échap.
+- Important : cette démo n'envoie et ne stocke aucune donnée. Le message le précise.
+- Pour un vrai site, connecter le formulaire à un email, WhatsApp ou un service backend.

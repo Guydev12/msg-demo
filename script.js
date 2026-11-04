@@ -21,35 +21,51 @@ if (dateField) {
   dateField.min = localDate;
 }
 
+const modal = document.getElementById('confirmationModal');
+const summary = document.getElementById('confirmationSummary');
+let previousFocus = null;
+
+function closeConfirmation() {
+  modal.classList.remove('is-visible');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('modal-open');
+  if (previousFocus) previousFocus.focus();
+}
+
+function openConfirmation(data) {
+  previousFocus = document.activeElement;
+  const items = [
+    ['Nom', data.get('name')],
+    ['Espace', data.get('space')],
+    ['Date souhaitée', data.get('date') || 'À convenir'],
+    ['Participants', data.get('people') || 'À préciser']
+  ];
+  summary.replaceChildren();
+  items.forEach(([label, value]) => {
+    const row = document.createElement('div');
+    row.className = 'confirmation-summary-row';
+    const key = document.createElement('span');
+    key.textContent = label;
+    const val = document.createElement('strong');
+    val.textContent = value || '—';
+    row.append(key, val);
+    summary.appendChild(row);
+  });
+  modal.classList.add('is-visible');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('modal-open');
+  modal.querySelector('.confirmation-done').focus();
+}
+
 document.getElementById('bookingForm').addEventListener('submit', (event) => {
   event.preventDefault();
-  const form = new FormData(event.currentTarget);
-  const value = key => (form.get(key) || '').toString().trim();
-  const lines = [
-    'Bonjour MSG, je souhaite obtenir des informations sur une réservation.',
-    '',
-    `Nom : ${value('name')}`,
-    `Téléphone : ${value('phone')}`,
-    `Espace : ${value('space')}`,
-    `Date souhaitée : ${value('date') || 'À convenir'}`,
-    `Participants : ${value('people') || 'À préciser'}`,
-    `Besoin : ${value('message') || 'À discuter'}`
-  ];
-  const message = encodeURIComponent(lines.join('\n'));
-  const note = document.getElementById('formNote');
-  note.textContent = 'Votre message est prêt. Pour l’envoyer, ajoutez le numéro WhatsApp officiel de MSG au lien WhatsApp du site final. Cette démo ne transmet aucune donnée.';
-  const whatsappNumber = ''; // À remplacer par le numéro WhatsApp officiel de MSG, chiffres uniquement.
-  if (whatsappNumber) {
-    window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank', 'noopener');
-  } else {
-    const preview = document.createElement('textarea');
-    preview.value = decodeURIComponent(message);
-    preview.setAttribute('readonly', '');
-    preview.style.cssText = 'position:fixed;left:-9999px;top:0';
-    document.body.appendChild(preview);
-    preview.select();
-    try { document.execCommand('copy'); note.textContent += ' Le texte de la demande a été copié.'; }
-    catch (_) { note.textContent += ' Copiez les informations du formulaire manuellement.'; }
-    preview.remove();
-  }
+  if (!event.currentTarget.reportValidity()) return;
+  openConfirmation(new FormData(event.currentTarget));
+});
+
+modal.querySelectorAll('[data-close-modal]').forEach(button => {
+  button.addEventListener('click', closeConfirmation);
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && modal.classList.contains('is-visible')) closeConfirmation();
 });
